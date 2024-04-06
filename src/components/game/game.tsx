@@ -126,7 +126,7 @@ export default function Game({questions, getQuestions, setStart, setLoadingMain}
           <div className="buttons">
             {nextQuestion && !showResults? <button className="next-question btn" onClick={()=>handleNextQuestion()}>{!lastQuestion? 'Next Question' : 'Show Results'}</button> : null}
             {showResults?<button className='btn start'onClick={()=> goToMenu()}>Go to menu</button>: null}
-            {questionNumber === 0 && nextQuestion === false ? null :<button className="reset-btn btn" onClick={()=> reset()}>Reset</button>}
+            {questionNumber !== 0  ? <button className="reset-btn btn" onClick={()=> reset()}>Reset</button>: null}
           </div>
         </section> 
       </>
