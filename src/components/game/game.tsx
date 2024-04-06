@@ -1,7 +1,7 @@
 import { ReactNode, useEffect, useState } from "react";
 import {decode} from 'html-entities';
 import { Question } from "../../interfaces"
-import QuestionCard from "../questionCard/index";
+import QuestionCard from "../questionCard/questionCard";
 import Results from "../results/results";
 import Navbar from "../navbar/navbar";
 import LoadingModal from "../loading-modal/loading-modal";
@@ -39,7 +39,7 @@ export default function Game({questions, getQuestions, setStart}:Props){
         setShowResults(true)
       }
     }, 500)
-    setTimeout(()=>setLoading(false), 1000)
+    setTimeout(()=>setLoading(false), 950)
   }
 
   function reset(){
@@ -87,11 +87,7 @@ export default function Game({questions, getQuestions, setStart}:Props){
         if(decodedQuestions){
           const card = decodedQuestions.map((question, index) => {
             return (
-              <QuestionCard key={index}>
-                    <QuestionCard.Category>Category: {question.category}</QuestionCard.Category>
-                    <QuestionCard.Question>{question.question}</QuestionCard.Question>
-                    <QuestionCard.Answers correct_answer={question.correct_answer} incorrect_answers={question.incorrect_answers} setNextQuestion={setNextQuestion} correctAnswer={correctAnswer}/>
-                </QuestionCard>
+              <QuestionCard key={index} category={question.category} question={question.question} correct_answer={question.correct_answer} incorrect_answers={question.incorrect_answers} setNextQuestion={setNextQuestion} correctAnswer={correctAnswer}/>
             ) 
           })
           return card

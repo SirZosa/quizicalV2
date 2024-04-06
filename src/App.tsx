@@ -3,6 +3,7 @@ import {useState} from 'react'
 import Menu from './components/menu/menu.tsx'
 import Game from './components/game/game.tsx'
 import { Question } from './interfaces.ts'
+import LoadingModal from './components/loading-modal/loading-modal.tsx'
 
 
 function App() {
@@ -14,12 +15,16 @@ function App() {
   const [game, setGame] = useState<GameSettings>({category:'', difficulty:''})
   const [questions, setQuestions] = useState<Question[] | null>(null)
   const [start, setStart] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(false)
 
   function getQuestions(){
+    setLoading(true)
     fetch(`https://opentdb.com/api.php?amount=5${game.category}${game.difficulty}`)
     .then(res => res.json())
     .then(data => setQuestions(data.results))
-    setStart(true)
+    setTimeout(()=>setStart(true),500)
+    setTimeout(()=>setLoading(false),950)
+    
   }
 
   function getGame(valueToChange:string ,value: string):void{
@@ -37,6 +42,7 @@ function App() {
     
   return (
     <>
+      {loading ? <LoadingModal/> : null}
       {start? <Game questions={questions} getQuestions={getQuestions} setStart={setStart}/> : <Menu getGame={getGame} getQuestions={getQuestions}/>}
     </>
   )
