@@ -15,15 +15,15 @@ function App() {
   const [game, setGame] = useState<GameSettings>({category:'', difficulty:''})
   const [questions, setQuestions] = useState<Question[] | null>(null)
   const [start, setStart] = useState<boolean>(false)
-  const [loading, setLoading] = useState<boolean>(false)
+  const [loadingMain, setLoadingMain] = useState<boolean>(false)
 
   function getQuestions(){
-    setLoading(true)
+    setLoadingMain(true)
     fetch(`https://opentdb.com/api.php?amount=5${game.category}${game.difficulty}`)
     .then(res => res.json())
     .then(data => setQuestions(data.results))
     setTimeout(()=>setStart(true),500)
-    setTimeout(()=>setLoading(false),950)
+    setTimeout(()=>setLoadingMain(false),950)
     
   }
 
@@ -42,8 +42,8 @@ function App() {
     
   return (
     <>
-      {loading ? <LoadingModal/> : null}
-      {start? <Game questions={questions} getQuestions={getQuestions} setStart={setStart}/> : <Menu getGame={getGame} getQuestions={getQuestions}/>}
+      {loadingMain ? <LoadingModal/> : null}
+      {start? <Game questions={questions} getQuestions={getQuestions} setStart={setStart} setLoadingMain={setLoadingMain}/> : <Menu getGame={getGame} getQuestions={getQuestions}/>}
     </>
   )
 }

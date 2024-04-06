@@ -9,8 +9,9 @@ interface Props{
     questions: Question[] | null
     getQuestions:()=>void
     setStart:(boolean:boolean)=>void
+    setLoadingMain:(boolean:boolean)=>void
 }
-export default function Game({questions, getQuestions, setStart}:Props){
+export default function Game({questions, getQuestions, setStart, setLoadingMain}:Props){
 
   const[questionNumber, setQuestionNumber]=useState<number>(0)
   const [correctAnswers, setCorrectAnswers] = useState<boolean[]>([])
@@ -53,12 +54,16 @@ export default function Game({questions, getQuestions, setStart}:Props){
   }
 
   function goToMenu(){
-    setQuestionNumber(0)
-    setCorrectAnswers([])
-    setShowQuestions(true)
-    setShowResults(false)
-    setLastQUestion(false)
-    setStart(false)
+    setLoadingMain(true)
+    setTimeout(()=>{
+      setQuestionNumber(0)
+      setCorrectAnswers([])
+      setShowQuestions(true)
+      setShowResults(false)
+      setLastQUestion(false)
+      setStart(false)
+    },500)
+    setTimeout(()=>setLoadingMain(false),950)
   }
 
   function correctAnswer(boolean:boolean){
@@ -121,7 +126,7 @@ export default function Game({questions, getQuestions, setStart}:Props){
           <div className="buttons">
             {nextQuestion && !showResults? <button className="next-question btn" onClick={()=>handleNextQuestion()}>{!lastQuestion? 'Next Question' : 'Show Results'}</button> : null}
             {showResults?<button className='btn start'onClick={()=> goToMenu()}>Go to menu</button>: null}
-            <button className="reset-btn btn" onClick={()=> reset()}>Reset</button>
+            {questionNumber === 0 && nextQuestion === false ? null :<button className="reset-btn btn" onClick={()=> reset()}>Reset</button>}
           </div>
         </section> 
       </>
