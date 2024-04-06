@@ -23,8 +23,7 @@ function App() {
     .then(res => res.json())
     .then(data => setQuestions(data.results))
     setTimeout(()=>setStart(true),500)
-    setTimeout(()=>setLoadingMain(false),950)
-    
+    setTimeout(()=>setLoadingMain(false),950);
   }
 
   function getGame(valueToChange:string ,value: string):void{
@@ -43,7 +42,7 @@ function App() {
   return (
     <>
       {loadingMain ? <LoadingModal/> : null}
-      {start? <Game questions={questions} getQuestions={getQuestions} setStart={setStart} setLoadingMain={setLoadingMain}/> : <Menu getGame={getGame} getQuestions={getQuestions}/>}
+      {start? <Game questions={questions} getQuestions={getQuestions} restartQuestions={setQuestions} setStart={setStart} setLoadingMain={setLoadingMain}/> : <Menu getGame={getGame} getQuestions={getQuestions}/>}
     </>
   )
 }

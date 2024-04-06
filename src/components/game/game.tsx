@@ -10,8 +10,9 @@ interface Props{
     getQuestions:()=>void
     setStart:(boolean:boolean)=>void
     setLoadingMain:(boolean:boolean)=>void
+    restartQuestions:(arg:null)=>void
 }
-export default function Game({questions, getQuestions, setStart, setLoadingMain}:Props){
+export default function Game({questions, getQuestions, setStart, setLoadingMain, restartQuestions}:Props){
 
   const[questionNumber, setQuestionNumber]=useState<number>(0)
   const [correctAnswers, setCorrectAnswers] = useState<boolean[]>([])
@@ -44,6 +45,7 @@ export default function Game({questions, getQuestions, setStart, setLoadingMain}
   }
 
   function reset(){
+    restartQuestions(null)
     getQuestions()
     setNextQuestion(false)
     setQuestionNumber(0)

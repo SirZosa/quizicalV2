@@ -23,10 +23,11 @@ body{
     position: relative;
     width: 95%;
     max-width: 1080px;
+    height: 100vh;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
     text-align: center;
 }
